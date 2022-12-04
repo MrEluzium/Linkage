@@ -7,6 +7,9 @@ import net.fabricmc.api.Environment;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Hand;
+import net.minecraft.util.TypedActionResult;
+import net.minecraft.world.World;
 import org.elzzz.linkage.LinkageMod;
 
 public class BaseGlyphRingItem extends TrinketItem {
@@ -16,14 +19,26 @@ public class BaseGlyphRingItem extends TrinketItem {
     }
 
     @Override
-    @Environment(EnvType.SERVER)
     public void onEquip(ItemStack stack, SlotReference slot, LivingEntity entity) {
-        LinkageMod.LOGGER.info(String.format("Ring equipped: entity: %s stack: %s", entity.toString(), stack.getItem().toString()));
+        if (!entity.world.isClient()) {
+            LinkageMod.LOGGER.info(String.format("Ring equipped | entity: %s dimension: %s stack: %s",
+                    entity.toString(),
+                    entity.world.getDimensionKey(),
+                    stack.getItem().toString()));
+
+            LinkageMod.availablePlayers.put(((PlayerEntity)entity).getUuidAsString(), (PlayerEntity)entity);
+        }
     }
 
     @Override
-    @Environment(EnvType.SERVER)
     public void onUnequip(ItemStack stack, SlotReference slot, LivingEntity entity) {
-        LinkageMod.LOGGER.info(String.format("Ring UNequipped: entity: %s stack: %s", entity.toString(), stack.getItem().toString()));
+        if (!entity.world.isClient()){
+            LinkageMod.LOGGER.info(String.format("Ring UNequipped | entity: %s dimension: %s stack: %s",
+                    entity.toString(),
+                    entity.world.getDimensionKey(),
+                    stack.getItem().toString()));
+
+            LinkageMod.availablePlayers.remove(((PlayerEntity)entity).getUuidAsString());
+        }
     }
 }
