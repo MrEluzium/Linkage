@@ -20,6 +20,9 @@
   "entrypoints": {
     "main": [
       "org.elzzz.linkage.LinkageMod"
+    ],
+    "client": [
+      "org.elzzz.linkage.client.LinkageClient"
     ]
   },
   "mixins": [
