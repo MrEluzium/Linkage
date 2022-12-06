@@ -3,6 +3,8 @@
   "item.linkage.interdimensional_glyph_ring": "Interdimensional Glyph Eing",
   "item.linkage.debug_pie": "Debug Pie",
 
+  "linkage.gui.no_ring_found": "Glyph Ring Is Not Equipped!",
+
   "key.category.linkage": "Linkage",
   "key.linkage.open_teleportation_screen": "Open Glyph Ring Screen (With Glyph Ring Equipped)"
 }
