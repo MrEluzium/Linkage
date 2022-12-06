@@ -1,9 +1,9 @@
 package org.elzzz.linkage;
 
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
+import org.elzzz.linkage.event.ModEvents;
 import org.elzzz.linkage.register.ModItems;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,9 +19,6 @@ public class LinkageMod implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		ModItems.register();
-
-		ServerPlayConnectionEvents.DISCONNECT.register((handler, server) -> {
-			availablePlayers.remove(handler.player.getUuidAsString());
-		});
+		ModEvents.register();
 	}
 }
