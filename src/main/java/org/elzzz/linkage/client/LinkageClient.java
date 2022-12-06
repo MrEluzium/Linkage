@@ -12,6 +12,10 @@ import java.util.UUID;
 public class LinkageClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
+
+        KeyInputHandler.register();
+
+        /* available_players_data packet receiver */
         ClientPlayNetworking.registerGlobalReceiver(LinkageMod.availablePlayersPacketIdentifier, (client, handler, buf, responseSender) -> {
             HashMap<String, PlayerListEntry> availablePlayers = new HashMap<>();
 
@@ -21,7 +25,7 @@ public class LinkageClient implements ClientModInitializer {
                 availablePlayers.put(current_uuid.toString(), handler.getPlayerListEntry(current_uuid));
             }
 
-            if(client.player != null){
+            if(client.player != null) {
                 DebugPieItem.showAvailablePlayers(client.player, availablePlayers);
             }
             else {

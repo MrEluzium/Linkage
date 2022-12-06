@@ -1,5 +1,8 @@
 {
   "item.linkage.glyph_ring": "Glyph Ring",
   "item.linkage.interdimensional_glyph_ring": "Interdimensional Glyph Eing",
-  "item.linkage.debug_pie": "Debug Pie"
+  "item.linkage.debug_pie": "Debug Pie",
+
+  "key.category.linkage": "Linkage",
+  "key.linkage.open_teleportation_screen": "Open Glyph Ring Screen (With Glyph Ring Equipped)"
 }
