@@ -4,7 +4,9 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.network.PlayerListEntry;
 import org.elzzz.linkage.LinkageMod;
+import org.elzzz.linkage.data.PlayerData;
 import org.elzzz.linkage.item.DebugPieItem;
+import org.elzzz.linkage.util.AvailablePlayersPacketBufHandler;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -17,16 +19,10 @@ public class LinkageClient implements ClientModInitializer {
 
         /* available_players_data packet receiver */
         ClientPlayNetworking.registerGlobalReceiver(LinkageMod.availablePlayersPacketIdentifier, (client, handler, buf, responseSender) -> {
-            HashMap<String, PlayerListEntry> availablePlayers = new HashMap<>();
-
-            int size = buf.readVarInt();
-            for(int i = 0; i < size; i++) {
-                UUID current_uuid = buf.readUuid();
-                availablePlayers.put(current_uuid.toString(), handler.getPlayerListEntry(current_uuid));
-            }
+            HashMap<UUID, PlayerData> availablePlayersData = AvailablePlayersPacketBufHandler.readBuf(buf);
 
             if(client.player != null) {
-                DebugPieItem.showAvailablePlayers(client.player, availablePlayers);
+                DebugPieItem.showAvailablePlayers(client.player, availablePlayersData);
             }
             else {
                 LinkageMod.LOGGER.warn("Received available_players_data packet has no player info.");
