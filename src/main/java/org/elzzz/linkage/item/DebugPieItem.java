@@ -16,6 +16,7 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 import org.elzzz.linkage.LinkageMod;
 import org.elzzz.linkage.data.PlayerData;
+import org.elzzz.linkage.networking.ModNetworking;
 import org.elzzz.linkage.util.AvailablePlayersPacketBufHandler;
 
 import java.util.HashMap;
@@ -47,8 +48,8 @@ public class DebugPieItem extends Item {
         if (world.isClient() || hand != Hand.MAIN_HAND) return TypedActionResult.pass(user.getStackInHand(hand));
 
         PacketByteBuf buf = AvailablePlayersPacketBufHandler.getBuf(LinkageMod.availablePlayers);
+        ServerPlayNetworking.send((ServerPlayerEntity)user, ModNetworking.AVAILABLE_PLAYERS_ID, buf);
 
-        ServerPlayNetworking.send((ServerPlayerEntity)user, LinkageMod.availablePlayersPacketIdentifier, buf);
         return TypedActionResult.success(user.getStackInHand(hand));
     }
 }

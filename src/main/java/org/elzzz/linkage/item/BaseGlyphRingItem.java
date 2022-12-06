@@ -17,11 +17,11 @@ public class BaseGlyphRingItem extends TrinketItem {
     public void onEquip(ItemStack stack, SlotReference slot, LivingEntity entity) {
         if (!entity.world.isClient()) {
             LinkageMod.LOGGER.info(String.format("Ring equipped | entity: %s dimension: %s stack: %s",
-                    entity.toString(),
+                    entity,
                     entity.world.getDimensionKey(),
                     stack.getItem().toString()));
 
-            LinkageMod.availablePlayers.put(((PlayerEntity)entity).getUuidAsString(), (PlayerEntity)entity);
+            LinkageMod.availablePlayers.put(entity.getUuidAsString(), (PlayerEntity)entity);
         }
     }
 
@@ -30,11 +30,11 @@ public class BaseGlyphRingItem extends TrinketItem {
         // TODO FIX doesn't trigger onUnequip on equip/unequip spamming
         if (!entity.world.isClient()){
             LinkageMod.LOGGER.info(String.format("Ring unequipped | entity: %s dimension: %s stack: %s",
-                    entity.toString(),
+                    entity,
                     entity.world.getDimensionKey(),
                     stack.getItem().toString()));
 
-            LinkageMod.availablePlayers.remove(((PlayerEntity)entity).getUuidAsString());
+            LinkageMod.availablePlayers.remove(entity.getUuidAsString());
         }
     }
 }
