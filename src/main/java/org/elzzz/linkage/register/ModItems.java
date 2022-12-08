@@ -16,7 +16,7 @@ public class ModItems {
     /* Items */
 
     public static final Item GLYPH_RING = new BaseGlyphRingItem(new FabricItemSettings().group(ItemGroup.MISC).maxCount(1));
-    public static final Item INTERDIMENSIONAL_GLYPH_RING = new BaseGlyphRingItem(new FabricItemSettings().group(ItemGroup.MISC).maxCount(1));
+    public static final Item INTERDIMENSIONAL_GLYPH_RING = new BaseGlyphRingItem(new FabricItemSettings().group(ItemGroup.MISC).maxCount(1).rarity(Rarity.RARE));
     public static final Item DEBUG_PIE = new DebugPieItem(new FabricItemSettings().group(ItemGroup.MISC).maxCount(1).rarity(Rarity.RARE));
 
     public static void register() {

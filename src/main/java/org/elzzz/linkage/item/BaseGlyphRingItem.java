@@ -4,9 +4,17 @@ import dev.emi.trinkets.api.SlotReference;
 import dev.emi.trinkets.api.TrinketItem;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
+import net.minecraft.world.World;
 import org.elzzz.linkage.networking.ModNetworking;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 public class BaseGlyphRingItem extends TrinketItem {
 
@@ -29,6 +37,19 @@ public class BaseGlyphRingItem extends TrinketItem {
     public void onUnequip(ItemStack stack, SlotReference slot, LivingEntity entity) {
         if (entity.world.isClient()) {
             ClientPlayNetworking.send(ModNetworking.MARK_PLAYER_AS_UNAVAILABLE_ID, PacketByteBufs.empty());
+        }
+    }
+
+    @Override
+    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+        if (Screen.hasShiftDown()) {
+            String item_key = stack.getRegistryEntry().getKey().get().getValue().toString().split(":")[1];
+            tooltip.add(Text.translatable(String.format("item.linkage.%s.tooltip_1", item_key)));
+            tooltip.add(Text.translatable(String.format("item.linkage.%s.tooltip_2", item_key)));
+            tooltip.add(Text.translatable(String.format("item.linkage.%s.tooltip_3", item_key)));
+        }
+        else {
+            tooltip.add(Text.translatable("linkage.gui.press_shift_for_info").formatted(Formatting.GRAY));
         }
     }
 }

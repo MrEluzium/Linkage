@@ -1,9 +1,16 @@
 {
   "item.linkage.glyph_ring": "Glyph Ring",
+  "item.linkage.glyph_ring.tooltip_1": "Allows the carrier to instantly travel",
+  "item.linkage.glyph_ring.tooltip_2": "between other carriers of such rings",
+  "item.linkage.glyph_ring.tooltip_3": "within the same dimension",
   "item.linkage.interdimensional_glyph_ring": "Interdimensional Glyph Eing",
+  "item.linkage.interdimensional_glyph_ring.tooltip_1": "Allows the carrier to instantly travel",
+  "item.linkage.interdimensional_glyph_ring.tooltip_2": "between other carriers of such rings",
+  "item.linkage.interdimensional_glyph_ring.tooltip_3": "all around the multiverse",
   "item.linkage.debug_pie": "Debug Pie",
 
   "linkage.gui.no_ring_found": "Glyph Ring Is Not Equipped!",
+  "linkage.gui.press_shift_for_info": "Press shift for more info...",
 
   "key.category.linkage": "Linkage",
   "key.linkage.open_teleportation_screen": "Open Glyph Ring Screen (With Glyph Ring Equipped)"
