@@ -4,7 +4,6 @@ import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.server.network.ServerPlayNetworkHandler;
 import org.elzzz.linkage.LinkageMod;
 import org.elzzz.linkage.data.PlayerData;
 import org.elzzz.linkage.item.DebugPieItem;
