@@ -4,22 +4,25 @@ import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.Element;
 import net.minecraft.client.gui.PlayerSkinDrawer;
 import net.minecraft.client.gui.Selectable;
-import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.ElementListWidget;
 import net.minecraft.client.gui.widget.TexturedButtonWidget;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.OrderedText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.ColorHelper;
 import org.elzzz.linkage.client.gui.screen.LinkageTeleportScreen;
+import org.elzzz.linkage.networking.ModNetworking;
 
 import java.util.List;
 import java.util.Objects;
@@ -55,6 +58,9 @@ public class LinkageTeleportScreenPlayerEntry extends ElementListWidget.Entry<Li
         this.tooltip = client.textRenderer.wrapLines(Text.translatable("linkage.gui.teleportation_screen.tooltip", this.name), 150);
 
         this.teleportButton = new TexturedButtonWidget(0, 0, 20, 20, 0, 0, 20, REPORT_BUTTON_TEXTURE, 64, 64, (button) -> {
+            PacketByteBuf buf = PacketByteBufs.create();
+            buf.writeUuid(this.uuid);
+            ClientPlayNetworking.send(ModNetworking.EXECUTE_TELEPORTATION, buf);
             this.client.setScreen(null);
         }, new ButtonWidget.TooltipSupplier() {
             public void onTooltip(ButtonWidget buttonWidget, MatrixStack matrixStack, int i, int j) {
