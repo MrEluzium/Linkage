@@ -8,41 +8,30 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.text.Text;
+import org.elzzz.linkage.client.gui.screen.LinkageTeleportScreen;
 import org.elzzz.linkage.register.ModItems;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.Optional;
 
-enum GlypHRingEquippedState {
-    NONE,
-    LOCAL, // GLYPH_RING
-    GLOBAL // INTERDIMENSIONAL_GLYPH_RING
-}
-
 public class KeyInputHandler {
     public static final String KEY_CATEGORY_LINKAGE = "key.category.linkage";
     public static final String KEY_OPEN_LINKAGE_SCREEN = "key.linkage.open_teleportation_screen";
 
-    private static KeyBinding openTeleportationScreenKey;
+    public static KeyBinding openTeleportationScreenKey;
 
     private static void handleTeleportationScreenKey(MinecraftClient client) {
         while (openTeleportationScreenKey.wasPressed()) {
             Optional<TrinketComponent> playerTrinketComponent = TrinketsApi.getTrinketComponent(client.player);
-            GlypHRingEquippedState state = GlypHRingEquippedState.NONE;
 
             if (playerTrinketComponent.isPresent()) {
                 if (playerTrinketComponent.get().isEquipped(ModItems.GLYPH_RING))
-                    state = GlypHRingEquippedState.LOCAL;
+                    client.setScreen(new LinkageTeleportScreen(true));
                 else if (playerTrinketComponent.get().isEquipped(ModItems.INTERDIMENSIONAL_GLYPH_RING))
-                    state = GlypHRingEquippedState.GLOBAL;
+                    client.setScreen(new LinkageTeleportScreen(false));
+                else
+                    client.player.sendMessage(Text.translatable("linkage.gui.no_ring_found"), true);
             }
-
-            switch (state) {
-                case NONE -> client.player.sendMessage(Text.translatable("linkage.gui.no_ring_found"), true);
-                case LOCAL -> client.player.sendMessage(Text.literal("GLYPH_RING"), true);
-                case GLOBAL -> client.player.sendMessage(Text.literal("INTERDIMENSIONAL_GLYPH_RING"), true);
-            }
-
         }
     }
 

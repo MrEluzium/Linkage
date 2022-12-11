@@ -11,7 +11,10 @@
 
   "linkage.gui.no_ring_found": "Glyph Ring Is Not Equipped!",
   "linkage.gui.press_shift_for_info": "Press shift for more info...",
+  "linkage.gui.teleportation_screen.title": "Glyph Ring Teleportation Menu",
+  "linkage.gui.teleportation_screen.no_available_players": "Seems like glyph ring can't find anyone...",
+  "linkage.gui.teleportation_screen.tooltip": "Teleport to %s",
 
   "key.category.linkage": "Linkage",
-  "key.linkage.open_teleportation_screen": "Open Glyph Ring Screen (With Glyph Ring Equipped)"
+  "key.linkage.open_teleportation_screen": "Open Teleportation Menu (With Glyph Ring Equipped)"
 }
