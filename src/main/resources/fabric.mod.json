@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "linkage",
+  "version": "${version}",
+
+  "name": "Linkage",
+  "description": "Look mom I'm a minecraft modder!",
+  "authors": [
+    "Elzzz"
+  ],
+  "contact": {
+    "sources": "https://github.com/MrEluzium/Linkage",
+    "issues": "https://github.com/MrEluzium/Linkage/issues"
+  },
+
+  "license": "LGPL-3.0-only",
+  "icon": "assets/linkage/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "org.elzzz.linkage.LinkageMod"
+    ]
+  },
+  "mixins": [
+    "linkage.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.14.10",
+    "fabric-api": "*",
+    "minecraft": "~1.19",
+    "java": ">=17"
+  }
+}
