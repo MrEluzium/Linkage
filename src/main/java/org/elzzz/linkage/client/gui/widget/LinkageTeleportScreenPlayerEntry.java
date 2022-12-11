@@ -55,7 +55,7 @@ public class LinkageTeleportScreenPlayerEntry extends ElementListWidget.Entry<Li
         this.tooltip = client.textRenderer.wrapLines(Text.translatable("linkage.gui.teleportation_screen.tooltip", this.name), 150);
 
         this.teleportButton = new TexturedButtonWidget(0, 0, 20, 20, 0, 0, 20, REPORT_BUTTON_TEXTURE, 64, 64, (button) -> {
-            this.client.setScreen((Screen)null);
+            this.client.setScreen(null);
         }, new ButtonWidget.TooltipSupplier() {
             public void onTooltip(ButtonWidget buttonWidget, MatrixStack matrixStack, int i, int j) {
                 LinkageTeleportScreenPlayerEntry entry = LinkageTeleportScreenPlayerEntry.this;

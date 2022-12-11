@@ -46,12 +46,15 @@ public class LinkageTeleportScreenWidget extends ElementListWidget<LinkageTelepo
         ClientPlayNetworkHandler clientPlayNetworkHandler = this.client.player.networkHandler;
         Collection<LinkageTeleportScreenPlayerEntry> players = new HashSet<>();
 
+        String local_player_name = clientPlayNetworkHandler.getProfile().getName();
+        String local_player_dimension = clientPlayNetworkHandler.getWorld().getDimensionKey().getValue().toString();
         LinkageClient.clientAvailablePlayers.forEach((uuid, dimension) -> {
 
             PlayerListEntry playerListEntry = clientPlayNetworkHandler.getPlayerListEntry(uuid);
             if (playerListEntry != null) {
                 String name = playerListEntry.getProfile().getName();
-                if (Objects.equals(clientPlayNetworkHandler.getProfile().getName(), name)) { return; }
+                if (Objects.equals(local_player_name, name) ||
+                        (parent.isLocal() && !Objects.equals(local_player_dimension, dimension))) { return; }
 
                 players.add(new LinkageTeleportScreenPlayerEntry(
                         this.client, this.parent, uuid, name,
