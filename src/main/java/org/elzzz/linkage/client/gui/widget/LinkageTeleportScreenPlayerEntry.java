@@ -11,6 +11,7 @@ import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.Element;
 import net.minecraft.client.gui.PlayerSkinDrawer;
 import net.minecraft.client.gui.Selectable;
+import net.minecraft.client.gui.tooltip.Tooltip;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.ElementListWidget;
 import net.minecraft.client.gui.widget.TexturedButtonWidget;
@@ -37,9 +38,7 @@ public class LinkageTeleportScreenPlayerEntry extends ElementListWidget.Entry<Li
     private final String name;
     private final String dimension;
     private final Supplier<Identifier> skinTexture;
-
     private final ButtonWidget teleportButton;
-    final List<OrderedText> tooltip;
     float timeCounter;
     public static final int BLACK_COLOR;
     public static final int GRAY_COLOR;
@@ -55,28 +54,21 @@ public class LinkageTeleportScreenPlayerEntry extends ElementListWidget.Entry<Li
         this.dimension = dimension;
         this.skinTexture = skinTexture;
 
-        this.tooltip = client.textRenderer.wrapLines(Text.translatable("linkage.gui.teleportation_screen.tooltip", this.name), 150);
-
         this.teleportButton = new TexturedButtonWidget(0, 0, 20, 20, 0, 0, 20, REPORT_BUTTON_TEXTURE, 64, 64, (button) -> {
             PacketByteBuf buf = PacketByteBufs.create();
             buf.writeUuid(this.uuid);
             ClientPlayNetworking.send(ModNetworking.EXECUTE_TELEPORTATION, buf);
             this.client.setScreen(null);
-        }, new ButtonWidget.TooltipSupplier() {
-            public void onTooltip(ButtonWidget buttonWidget, MatrixStack matrixStack, int i, int j) {
-                LinkageTeleportScreenPlayerEntry entry = LinkageTeleportScreenPlayerEntry.this;
-                entry.timeCounter += client.getLastFrameDuration();
-                if (LinkageTeleportScreenPlayerEntry.this.timeCounter >= 10.0F) {
-                    parent.setOnRendered(() -> {
-                        LinkageTeleportScreenPlayerEntry.renderTooltip(parent, matrixStack, LinkageTeleportScreenPlayerEntry.this.tooltip, i, j);
-                    });
-                }
-            }
         }, Text.literal("teleport button")) {
             protected MutableText getNarrationMessage() {
                 return LinkageTeleportScreenPlayerEntry.this.getNarrationMessage();
             }
         };
+        this.teleportButton.setTooltip(Tooltip.of(
+                Text.translatable("linkage.gui.teleportation_screen.tooltip").append(name),
+                this.getNarrationMessage())
+        );
+        this.teleportButton.setTooltipDelay(10);
     }
 
     public void render(MatrixStack matrices, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
@@ -103,8 +95,8 @@ public class LinkageTeleportScreenPlayerEntry extends ElementListWidget.Entry<Li
 
         if (this.teleportButton != null) {
             float f = this.timeCounter;
-            this.teleportButton.x = x + (entryWidth - this.teleportButton.getWidth() - 4);
-            this.teleportButton.y = y + (entryHeight - this.teleportButton.getHeight()) / 2;
+            this.teleportButton.setX(x + (entryWidth - this.teleportButton.getWidth() - 4));
+            this.teleportButton.setY(y + (entryHeight - this.teleportButton.getHeight()) / 2);
             this.teleportButton.render(matrices, mouseX, mouseY, tickDelta);
             if (f == this.timeCounter) {
                 this.timeCounter = 0.0F;
@@ -115,11 +107,6 @@ public class LinkageTeleportScreenPlayerEntry extends ElementListWidget.Entry<Li
 
     MutableText getNarrationMessage() {
         return Text.translatable("linkage.gui.teleportation_screen.tooltip").append(name);
-    }
-
-    static void renderTooltip(LinkageTeleportScreen screen, MatrixStack matrices, List<OrderedText> tooltip, int mouseX, int mouseY) {
-        screen.renderOrderedTooltip(matrices, tooltip, mouseX, mouseY);
-        screen.setOnRendered((Runnable)null);
     }
 
     public List<? extends Element> children() { return ImmutableList.of(this.teleportButton); }

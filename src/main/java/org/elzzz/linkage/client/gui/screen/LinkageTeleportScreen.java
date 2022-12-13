@@ -99,7 +99,7 @@ public class LinkageTeleportScreen extends Screen {
         }
 
         if (!this.searchBox.isFocused() && this.searchBox.getText().isEmpty()) {
-            drawTextWithShadow(matrices, this.client.textRenderer, SEARCH_TEXT, this.searchBox.x, this.searchBox.y, -1);
+            drawTextWithShadow(matrices, this.client.textRenderer, SEARCH_TEXT, this.searchBox.getX(), this.searchBox.getY(), -1);
         } else {
             this.searchBox.render(matrices, mouseX, mouseY, delta);
         }
