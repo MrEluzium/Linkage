@@ -17,9 +17,8 @@ public class ExecuteTeleportationC2SPacket {
 
         PlayerEntity destination_player = LinkageMod.availablePlayers.get(buf.readUuid().toString());
         if (destination_player == null){
-            LinkageMod.LOGGER.error(String.format("%s requested teleportation to %s, but target not in available players list",
-                    serverPlayerEntity.getName().toString(),
-                    destination_player.getName().toString()));
+            LinkageMod.LOGGER.error(String.format("%s requested teleportation, but target not in available players list",
+                    serverPlayerEntity.getName().toString()));
             return;
         }
 

@@ -25,6 +25,7 @@ public class DebugPieItem extends Item {
             return TypedActionResult.fail(user.getStackInHand(hand));
         }
         else {
+            user.sendMessage(Text.literal(" "));
             user.sendMessage(Text.literal("- Available Players Data -"));
             LinkageClient.clientAvailablePlayers.forEach((uuid, dimension) -> {
                 ClientPlayNetworkHandler clientPlayNetworkHandler = MinecraftClient.getInstance().player.networkHandler;

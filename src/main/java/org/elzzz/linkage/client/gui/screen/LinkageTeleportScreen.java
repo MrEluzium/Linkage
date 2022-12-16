@@ -107,7 +107,6 @@ public class LinkageTeleportScreen extends Screen {
         if (this.onRendered != null) { this.onRendered.run(); }
         super.render(matrices, mouseX, mouseY, delta);
     }
-
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         if (this.searchBox.isFocused()) {
             this.searchBox.mouseClicked(mouseX, mouseY, button);
@@ -132,7 +131,6 @@ public class LinkageTeleportScreen extends Screen {
             this.currentSearch = currentSearch;
             this.playerList.refresh();
         }
-
     }
 
     public void refresh() { this.playerList.refresh(); }
