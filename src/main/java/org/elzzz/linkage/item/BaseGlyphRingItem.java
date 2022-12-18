@@ -11,6 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.world.World;
+import org.elzzz.linkage.LinkageMod;
 import org.elzzz.linkage.networking.ModNetworking;
 import org.jetbrains.annotations.Nullable;
 
@@ -44,9 +45,12 @@ public class BaseGlyphRingItem extends TrinketItem {
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
         if (Screen.hasShiftDown()) {
             String item_key = stack.getRegistryEntry().getKey().get().getValue().toString().split(":")[1];
-            tooltip.add(Text.translatable(String.format("item.linkage.%s.tooltip_1", item_key)));
-            tooltip.add(Text.translatable(String.format("item.linkage.%s.tooltip_2", item_key)));
-            tooltip.add(Text.translatable(String.format("item.linkage.%s.tooltip_3", item_key)));
+
+            // tooltip translatable text is separated with :: symbols pair, which indicates line break
+            String[] tooltip_lines = Text.translatable(String.format("item.linkage.%s.tooltip", item_key)).getString().split("::");
+            for (String line : tooltip_lines) {
+                tooltip.add(Text.literal(line));
+            }
         }
         else {
             tooltip.add(Text.translatable("linkage.gui.press_shift_for_info").formatted(Formatting.GRAY));
