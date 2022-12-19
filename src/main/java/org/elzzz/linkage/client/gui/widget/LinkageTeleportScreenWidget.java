@@ -48,16 +48,20 @@ public class LinkageTeleportScreenWidget extends ElementListWidget<LinkageTelepo
 
         String local_player_name = clientPlayNetworkHandler.getProfile().getName();
         String local_player_dimension = clientPlayNetworkHandler.getWorld().getDimensionKey().getValue().toString();
-        LinkageClient.clientAvailablePlayers.forEach((uuid, dimension) -> {
 
+        LinkageClient.clientAvailablePlayers.forEach((uuid, dimension) -> {
             PlayerListEntry playerListEntry = clientPlayNetworkHandler.getPlayerListEntry(uuid);
             if (playerListEntry != null) {
                 String name = playerListEntry.getProfile().getName();
+
                 if (Objects.equals(local_player_name, name) ||
                         (parent.isLocal() && !Objects.equals(local_player_dimension, dimension))) { return; }
 
                 players.add(new LinkageTeleportScreenPlayerEntry(
-                        this.client, this.parent, uuid, name,
+                        this.client,
+                        this.parent,
+                        uuid,
+                        name,
                         parent.isLocal() ? "" : dimension,
                         playerListEntry::getSkinTexture)
                 );
@@ -65,16 +69,23 @@ public class LinkageTeleportScreenWidget extends ElementListWidget<LinkageTelepo
         });
 
         this.players.addAll(players);
-        this.filterPlayers();
+        this.filterPlayersBySearch();
+        this.sortPlayers();
         this.replaceEntries(this.players);
+
+        // In reference widget, scroll amount was always assigned to return value of getScrollAmount() method
+        this.setScrollAmount(this.getScrollAmount());
     }
 
-    private void filterPlayers() {
+    private void filterPlayersBySearch() {
         if (this.currentSearch != null) {
             this.players.removeIf((player) -> !player.getName().toLowerCase(Locale.ROOT).contains(this.currentSearch));
             this.replaceEntries(this.players);
         }
+    }
 
+    private void sortPlayers() {
+        this.players.sort(Comparator.comparing(LinkageTeleportScreenPlayerEntry::getName));
     }
 
     public void setCurrentSearch(String currentSearch) { this.currentSearch = currentSearch; }
