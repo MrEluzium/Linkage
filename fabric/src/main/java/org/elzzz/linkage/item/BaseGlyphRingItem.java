@@ -11,7 +11,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.world.World;
-import org.elzzz.linkage.LinkageMod;
 import org.elzzz.linkage.networking.ModNetworking;
 import org.jetbrains.annotations.Nullable;
 
