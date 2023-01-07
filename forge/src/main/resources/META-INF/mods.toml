@@ -11,14 +11,14 @@ authors = "Elzzz"
 description = "Look mom I'm a minecraft modder!"
 logoFile = "icon.png"
 
-[[dependencies.examplemod]]
+[[dependencies.linkage]]
 modId = "forge"
 mandatory = true
 versionRange = "[44,)"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies.examplemod]]
+[[dependencies.linkage]]
 modId = "minecraft"
 mandatory = true
 versionRange = "[1.19.3,)"
